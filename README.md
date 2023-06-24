@@ -1,6 +1,6 @@
 # Go言語での FHIRのサンプル2
 
-- [診療情報提供書HL7FHIR記述仕様](https://std.jpfhir.jp/)に基づくサンプルデータ（Bundle-BundleReferralExample01.json）に対して、汎用的なライブラリののみで、FHIRプロファイルでの検証、パースするサンプルプログラムです。
+- [診療情報提供書HL7FHIR記述仕様](https://std.jpfhir.jp/)に基づくサンプルデータ（Bundle-BundleReferralExample01.json）に対して、汎用的なライブラリのみで、FHIRプロファイルでの検証、パースするサンプルプログラムです。
 
 ## プロファイルの検証（バリデーション）とパース
 - FHIRプロファイルでの検証
@@ -10,13 +10,13 @@
         - [HL7 FHIR:R4 Validating Resources](http://hl7.org/fhir/R4/validation.html)
 
 - 【未実施】JPCoreプロファイル、文書情報プロファイルでの検証
-    - JSONスキーマでの提供がされていないことから、上記と同様の理由で、 [JPCoreプロファイル](https://jpfhir.jp/fhir/core/)、[診療情報提供書の文書情報プロファイル（IGpackage2023.4.27 snapshot形式: jp-ereferral-0.9.6-snap.tgz）](https://jpfhir.jp/fhir/eReferral/jp-ereferral-0.9.7-snap.tgz)レベルの検証を実施するのが難しそうです。
+    - JSON Schemaでの提供がされていないことから、上記と同様の理由で、 [JPCoreプロファイル](https://jpfhir.jp/fhir/core/)、[https://std.jpfhir.jp/](https://std.jpfhir.jp/)にある[診療情報提供書の文書情報プロファイル（IGpackage2023.4.27 snapshot形式: jp-ereferral-0.9.6-snap.tgz）](https://jpfhir.jp/fhir/eReferral/jp-ereferral-0.9.7-snap.tgz)レベルの検証を実施するのが難しそうです。
 
 - FHIRデータのパース
     - 前述の通り、Goの場合、FHIRのリファレンス実装がありません。
     - [別のリポジトリのgoのサンプルAP](https://github.com/mysd33/gofhirsample)では、[Golang FHIR Models](https://github.com/samply/golang-fhir-models)というライブラリを使用してみましたが、HAPIのようなリファレンス実装と比較しての信頼性、今後のR5等のFHIRバージョンアップ対応等の将来性が保証がされないことから、ここでは別の手段として、汎用的なJSONライブラリのみでFHIRのパースを実現できないかを検討しています。
     - 最初に、[Go標準のJSONライブラリ(encoding/json)](https://pkg.go.dev/encoding/json)を使用する方法が考えられますが、通常は、FHIRのモデルに対応した各構造体を定義する必要がありますし、interface{}型で動的に参照することもできますが複雑なJSON構造ではデータの抽出の実装がしにくいです。FHIRの特性上、構造体の定義する作業は煩雑なのと、バージョンアップに追従することも考えると、現実的な方法とは言えません。
-    - そこで、このサンプルAPでは、[gjson](https://github.com/tidwall/gjson)というサードパーティのライブラリを使って、構造体定義せずにかつJSONのパスの指定で簡単にデータ抽出できる方法で実装しました。
+    - そこで、このサンプルAPでは、[gjson](https://github.com/tidwall/gjson)というサードパーティのライブラリを使って、構造体定義せず、かつJSONのパスの指定で簡単にデータ抽出できる方法で実装しました。
 
 ## 実行方法
 - 検証・パースするサンプルAPの使い方
